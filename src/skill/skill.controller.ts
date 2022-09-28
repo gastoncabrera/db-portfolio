@@ -25,18 +25,18 @@ export class SkillController {
     return this.skillService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.skillService.findOne(+id);
-  // }
+  @Get(':id')
+  findOne(@Param('id') id: any) {
+    return this.skillService.findOne(id);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateSkillDto: UpdateSkillDto) {
-  //   return this.skillService.update(+id, updateSkillDto);
-  // }
+  @Patch(':id')
+  update(@Param('id') id: any, @Body() updateSkillDto) {
+    return this.skillService.update(id, updateSkillDto);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.skillService.remove(+id);
-  // }
+  @Delete(':id')
+  remove(@Param('id') id: any) {
+    return this.skillService.remove(id);
+  }
 }

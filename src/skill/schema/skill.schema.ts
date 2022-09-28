@@ -6,6 +6,9 @@ export type SkillDocument = Skill & Document;
 @Schema()
 export class Skill {
   @Prop()
+  id: string;
+
+  @Prop({ required: true })
   skill: string;
 
   @Prop()

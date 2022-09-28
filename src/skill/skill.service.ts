@@ -13,45 +13,49 @@ export class SkillService {
   ) {}
 
   async create(createSkillDto: CreateSkillDto) {
-    const createdSkill = new this.skillModel(createSkillDto);
+    const createdSkill = await new this.skillModel(createSkillDto);
     try {
       createdSkill.save();
+      return {
+        message: 'successfully created skills',
+      };
     } catch (error) {
-      console.error(error);
+      throw new NotFoundException(`skill #${error} not found`);
     }
-    return {
-      message: 'successfully created skills',
-    };
   }
 
   async findAll() {
     return this.skillModel.find().exec();
   }
 
-  // findOne(id: number) {
-  //   const res = this.skills.filter((item) => item.id === id);
-  //   if (!res.length) {
-  //     throw new NotFoundException(`skill #${id} not found`);
-  //   }
-  //   return res;
-  // }
+  async update(id: number, updateListDto) {
+    try {
+      await this.skillModel.findByIdAndUpdate(id, updateListDto);
+      return {
+        message: 'successfully update skills',
+      };
+    } catch (error) {
+      throw new NotFoundException(`skill #${id} not found`);
+    }
+  }
 
-  // update(id: number, updateSkillDto: UpdateSkillDto) {
-  //   const res = this.findOne(id);
-  //   if (!res.length) {
-  //     throw new NotFoundException(`skill #${id} not found`);
-  //   }
-  // }
+  async findOne(id: number) {
+    const list = await this.skillModel.findById(id);
+    if (!list) {
+      throw new NotFoundException(`skill #${id} not found`);
+    }
+    return list;
+  }
 
-  // remove(id: number) {
-  //   const res = this.findOne(id);
-  //   if (!res.length) {
-  //     throw new NotFoundException(`skill #${id} not found`);
-  //   } else {
-  //     this.skills.filter((item) => item.id !== id);
-  //   }
-  //   return {
-  //     message: 'successfully delete skills',
-  //   };
-  // }
+  async remove(id: number) {
+    try {
+      const list = await this.skillModel.findById(id);
+      list.remove();
+      return {
+        message: 'successfully delete skills',
+      };
+    } catch (error) {
+      throw new NotFoundException(`skill #${id} not found`);
+    }
+  }
 }

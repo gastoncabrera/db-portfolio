@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { SkillModule } from './skill/skill.module';
 import { MongooseModule } from '@nestjs/mongoose';
 // import { Skill, SkillSchema } from './skill/schema/skill.schema';
+import { ProyectModule } from './proyect/proyect.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     ),
     //   MongooseModule.forFeature([{ name: Skill.name, schema: SkillSchema }]),
     SkillModule,
+    ProyectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
