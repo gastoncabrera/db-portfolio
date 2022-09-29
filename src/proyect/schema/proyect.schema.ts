@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
+import { Skill } from '../../skill/schema/skill.schema';
 
 export type ProyectDocument = Proyect & Document;
 
@@ -17,8 +18,8 @@ export class Proyect {
   @Prop()
   description: string;
 
-  @Prop()
-  skill: string;
+  @Prop({ type: [{ type: Types.ObjectId, ref: Skill.name }] })
+  skill: Types.Array<Skill>;
 
   @Prop()
   demolink: string;

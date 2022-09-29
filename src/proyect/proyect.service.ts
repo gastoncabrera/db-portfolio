@@ -11,9 +11,13 @@ export class ProyectService {
     @InjectModel(Proyect.name) private proyectModel: Model<ProyectDocument>,
   ) {}
 
-  async create(createProyectDto: CreateProyectDto) {
-    const createdProyect = await new this.proyectModel(createProyectDto);
+  async create(createProyectDto: CreateProyectDto, file) {
     try {
+      const res = {
+        ...createProyectDto,
+        image: file.filename,
+      };
+      const createdProyect = new this.proyectModel(res);
       createdProyect.save();
       return {
         message: 'successfully created proyect',
@@ -24,7 +28,7 @@ export class ProyectService {
   }
 
   findAll() {
-    return `This action returns all proyect`;
+    return this.proyectModel.find().populate('skill').exec();
   }
 
   findOne(id: number) {

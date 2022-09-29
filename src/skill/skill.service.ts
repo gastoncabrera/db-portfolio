@@ -12,15 +12,19 @@ export class SkillService {
     @InjectModel(Skill.name) private skillModel: Model<SkillDocument>,
   ) {}
 
-  async create(createSkillDto: CreateSkillDto) {
-    const createdSkill = await new this.skillModel(createSkillDto);
+  async create(createSkillDto: CreateSkillDto, file) {
     try {
+      const res = {
+        image: file.filename,
+        skill: createSkillDto.skill,
+      };
+      const createdSkill = new this.skillModel(res);
       createdSkill.save();
       return {
         message: 'successfully created skills',
       };
     } catch (error) {
-      throw new NotFoundException(`skill #${error} not found`);
+      throw new NotFoundException(error);
     }
   }
 
