@@ -8,4 +8,10 @@ export class UpdateProyectDto extends PartialType(CreateProyectDto) {
 
   @IsString()
   title: string;
+
+  @IsString()
+  demolink: string;
+
+  @IsString()
+  repolink: string;
 }
