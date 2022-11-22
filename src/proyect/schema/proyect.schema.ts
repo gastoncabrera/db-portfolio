@@ -26,6 +26,9 @@ export class Proyect {
 
   @Prop()
   repolink: string;
+
+  @Prop()
+  order: number;
 }
 
 export const ProyectSchema = SchemaFactory.createForClass(Proyect);

@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { throwIfEmpty } from 'rxjs';
 import { CreateProyectDto } from './dto/create-proyect.dto';
 import { UpdateProyectDto } from './dto/update-proyect.dto';
 import { Proyect, ProyectDocument } from './schema/proyect.schema';
@@ -35,8 +36,12 @@ export class ProyectService {
     return `This action returns a #${id} proyect`;
   }
 
-  update(id: number, updateProyectDto: UpdateProyectDto) {
-    return `This action updates a #${id} proyect`;
+  async update(id: number, updateProyectDto: UpdateProyectDto) {
+    const res = await this.proyectModel.findByIdAndUpdate(id, updateProyectDto);
+    if (!res) {
+      throw new NotFoundException(`Order #${id} not found`);
+    }
+    return res;
   }
 
   remove(id: number) {
